@@ -9,9 +9,10 @@ import uoc.ds.pr.model.Collection;
 import uoc.ds.pr.util.DSLinkedList;
 
 public class CollectionRepository {
-    private BaseballCards baseballCards;
-    private BaseballCardsHelper helper;
+
     protected DSLinkedList<Collection> collections;
+    private final BaseballCards baseballCards;
+    private final BaseballCardsHelper helper;
 
 
     public CollectionRepository(BaseballCards baseballCards) {
@@ -54,7 +55,7 @@ public class CollectionRepository {
 
     public int numCatalogedCardsByCollection(String collectionName) {
         Collection collection = getCollection(collectionName);
-        return (collection!=null?collection.numCatalogedCards():0);
+        return (collection != null ? collection.numCatalogedCards() : 0);
     }
 
     public Iterator<CatalogedCard> getCatalogedCards(String collectionName) {

@@ -2,16 +2,19 @@ package uoc.ds.pr.model;
 
 import edu.uoc.ds.traversal.Iterator;
 import java.util.Comparator;
+import uoc.ds.pr.enums.CardRating;
 import uoc.ds.pr.util.DSLinkedList;
 
 public class CatalogedCard {
-    public static final Comparator<CatalogedCard> CMP = (cb1, cb2)->cb1.getCardId().compareTo(cb2.getCardId());
-    public static final Comparator<CatalogedCard> CMP_BOOKID = (cb1, cb2)->cb1.getCardId().compareTo(cb2.getCardId());
-    public static final Comparator<CatalogedCard> CMP_V = (cb1, cb2) -> Integer.compare(cb1.loanList.size(), cb2.loanList.size());
+
+    public static final Comparator<CatalogedCard> CMP = (cb1, cb2) -> cb1.getCardId().compareTo(cb2.getCardId());
+    public static final Comparator<CatalogedCard> CMP_CARDID = (cb1, cb2) -> cb1.getCardId().compareTo(cb2.getCardId());
+    public static final Comparator<CatalogedCard> CMP_V = (cb1, cb2) -> Integer.compare(cb1.loanList.size(),
+        cb2.loanList.size());
 
     public DSLinkedList<Loan> loanList;
 
-    private StoredCard storedCard;
+    private final StoredCard storedCard;
 
     private int copies;
     private boolean isLoaned;
@@ -27,7 +30,7 @@ public class CatalogedCard {
     }
 
     public String getCardId() {
-        return (storedCard !=null? storedCard.getCardId():null);
+        return (storedCard != null ? storedCard.getCardId() : null);
     }
 
 
@@ -65,5 +68,10 @@ public class CatalogedCard {
 
     public boolean isLoaned() {
         return isLoaned;
+    }
+
+
+    public CardRating getCardRating() {
+        return storedCard.getCardRating();
     }
 }

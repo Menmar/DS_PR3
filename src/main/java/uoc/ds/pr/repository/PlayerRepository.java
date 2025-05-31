@@ -8,9 +8,10 @@ import uoc.ds.pr.model.Player;
 import uoc.ds.pr.util.DSLinkedList;
 
 public class PlayerRepository {
-    private BaseballCards baseballCards;
-    private BaseballCardsHelper helper;
+
     protected DSLinkedList<Player> players;
+    private final BaseballCards baseballCards;
+    private final BaseballCardsHelper helper;
 
     public PlayerRepository(BaseballCards baseballCards) {
         this.baseballCards = baseballCards;
@@ -32,7 +33,7 @@ public class PlayerRepository {
     public int numCatalogedCards(String player) {
         Player thePlayer = getPlayer(player);
 
-        return (thePlayer!=null?thePlayer.numCatalogedCards():0);
+        return (thePlayer != null ? thePlayer.numCatalogedCards() : 0);
     }
 
     public Player getPlayer(String id) {

@@ -1,26 +1,41 @@
 package uoc.ds.pr.model;
 
-import edu.uoc.ds.adt.sequential.LinkedList;
 import edu.uoc.ds.adt.sequential.List;
+import java.util.Comparator;
+import uoc.ds.pr.enums.WorkerRole;
 import uoc.ds.pr.util.DSLinkedList;
 
 public class Worker {
+
+    public static final Comparator<Worker> CMP_ID = (w1, w2) -> w1.getId().compareTo(w2.getId());
     private String id;
     private String name;
     private String surname;
-
+    private WorkerRole role;
     private int totalCatalogBooks;
-
     private DSLinkedList<CatalogedCard> catalogedCards;
     private List<Loan> loanList;
     private DSLinkedList<Loan> closedLoanList;
 
+    public Worker(String id, String name, String surname, WorkerRole role) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.role = role;
+        this.totalCatalogBooks = 0;
+        this.catalogedCards = new DSLinkedList<>(CatalogedCard.CMP_CARDID);
+        this.loanList = new DSLinkedList<>(Loan.CMP_ID);
+        this.closedLoanList = new DSLinkedList<>(Loan.CMP_ID);
+    }
+
     public Worker(String id, String name, String surname) {
-        setId(id);
-        update(name, surname);
-        catalogedCards = new DSLinkedList(CatalogedCard.CMP);
-        loanList = new LinkedList<>();
-        closedLoanList = new DSLinkedList<>(Loan.CMP_ID);
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.totalCatalogBooks = 0;
+        this.catalogedCards = new DSLinkedList<>(CatalogedCard.CMP_CARDID);
+        this.loanList = new DSLinkedList<>(Loan.CMP_ID);
+        this.closedLoanList = new DSLinkedList<>(Loan.CMP_ID);
     }
 
     public String getId() {
@@ -39,13 +54,19 @@ public class Worker {
         this.name = name;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void update(String name, String surname, WorkerRole role) {
+        setName(name);
+        setSurname(surname);
+        setRole(role);
     }
 
     public void update(String name, String surname) {
         setName(name);
         setSurname(surname);
+    }
+
+    private void setRole(WorkerRole role) {
+        this.role = role;
     }
 
     public void addCataloguedCard(CatalogedCard catalogedBook) {
@@ -72,4 +93,15 @@ public class Worker {
         return closedLoanList.size();
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Worker getWorker(Worker worker) {
+        return worker;
+    }
 }

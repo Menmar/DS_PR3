@@ -5,7 +5,8 @@ import uoc.ds.pr.model.Player;
 import uoc.ds.pr.model.Worker;
 
 public class BaseballsCardsHelperImpl implements BaseballCardsHelper {
-    private BaseballCardsPR2Impl baseballCards;
+
+    private final BaseballCardsPR2Impl baseballCards;
 
     public BaseballsCardsHelperImpl(BaseballCardsPR2Impl baseballCards) {
         this.baseballCards = baseballCards;

@@ -1,30 +1,16 @@
 package uoc.ds.pr;
 
 import edu.uoc.ds.traversal.Iterator;
-import java.time.LocalDate;
-import uoc.ds.pr.exceptions.CatalogedCardAlreadyLoanedException;
-import uoc.ds.pr.exceptions.CatalogedCardNotFoundException;
-import uoc.ds.pr.exceptions.EntityNotFoundException;
-import uoc.ds.pr.exceptions.InvalidCatalogTimeException;
-import uoc.ds.pr.exceptions.InvalidLotPreparationTimeException;
-import uoc.ds.pr.exceptions.LoanNotFoundException;
-import uoc.ds.pr.exceptions.MaximumNumberOfLoansException;
-import uoc.ds.pr.exceptions.NoCardException;
-import uoc.ds.pr.exceptions.NoEntityException;
-import uoc.ds.pr.exceptions.NoLoanException;
-import uoc.ds.pr.exceptions.StoredCardNotFoundException;
-import uoc.ds.pr.exceptions.WorkerNotFoundException;
-import uoc.ds.pr.model.CatalogedCard;
-import uoc.ds.pr.model.Entity;
-import uoc.ds.pr.model.Loan;
-import uoc.ds.pr.model.Worker;
-import uoc.ds.pr.repository.CardRepository;
-import uoc.ds.pr.repository.CollectionRepository;
-import uoc.ds.pr.repository.EntityRepository;
-import uoc.ds.pr.repository.LoanRepository;
-import uoc.ds.pr.repository.PlayerRepository;
-import uoc.ds.pr.repository.WorkerRepository;
+import uoc.ds.pr.enums.CardRating;
+import uoc.ds.pr.enums.CardStatus;
+import uoc.ds.pr.enums.LoanStatus;
+import uoc.ds.pr.enums.WorkerRole;
+import uoc.ds.pr.exceptions.*;
+import uoc.ds.pr.model.*;
+import uoc.ds.pr.repository.*;
 import uoc.ds.pr.util.CardWareHouse;
+
+import java.time.LocalDate;
 
 
 public class BaseballCardsPR2Impl implements BaseballCards {
@@ -49,18 +35,20 @@ public class BaseballCardsPR2Impl implements BaseballCards {
         entityRepository.addEntity(entityId, name, address);
     }
 
-    public void addWorker(String id, String name, String surname) {
+    public void addWorker(String id, String name, String surname, WorkerRole role) {
         workerRepository.addWorker(id, name, surname);
     }
 
 
     @Override
-    public void storeCard(String cardId, String player, int publicationYear, String collection, CardStatus status){
-       cardRepository.storecard(cardId, player, publicationYear, collection, status);
+    public void storeCard(String cardId, String player, int publicationYear, String collection, CardStatus status,
+        CardRating rating){
+        cardRepository.storecard(cardId, player, publicationYear, collection, status);
     }
 
     @Override
-    public CatalogedCard catalogCard(String workerId) throws NoCardException, WorkerNotFoundException {
+    public CatalogedCard catalogCard(String workerId)
+        throws NoCardException, WorkerNotFoundException, WorkerNotAllowedException {
 
         if (!workerRepository.exist(workerId)) {
             throw new WorkerNotFoundException();
@@ -69,20 +57,20 @@ public class BaseballCardsPR2Impl implements BaseballCards {
             throw new NoCardException();
         }
 
-       CatalogedCard catalogedCard = cardRepository.catalogCard();
-       workerRepository.addCataloguedCard(workerId, catalogedCard);
-       playerRepository.addCatalogedCard(catalogedCard);
-       collectionRepository.addCatalogedCard(catalogedCard);
+        CatalogedCard catalogedCard = cardRepository.catalogCard();
+        workerRepository.addCataloguedCard(workerId, catalogedCard);
+        playerRepository.addCatalogedCard(catalogedCard);
+        collectionRepository.addCatalogedCard(catalogedCard);
 
-       return catalogedCard;
+        return catalogedCard;
     }
 
 
 
     @Override
     public Loan lendCard(String loanId, String entityId, String cardId, String workerId, LocalDate date, LocalDate expirationDate)
-            throws EntityNotFoundException, CatalogedCardNotFoundException,
-            WorkerNotFoundException, NoCardException, CatalogedCardAlreadyLoanedException, MaximumNumberOfLoansException {
+        throws EntityNotFoundException, CatalogedCardNotFoundException,
+        WorkerNotFoundException, NoCardException, CatalogedCardAlreadyLoanedException, MaximumNumberOfLoansException, WorkerNotAllowedException, CatalogedCardAlreadyAuctionedException {
 
         Entity entity = entityRepository.getEntityOrThrow(entityId);
 
@@ -187,7 +175,7 @@ public class BaseballCardsPR2Impl implements BaseballCards {
 
 
 
-   public  Iterator<Loan> getAllLoansByCard(String cardId) throws NoLoanException {
+    public  Iterator<Loan> getAllLoansByCard(String cardId) throws NoLoanException {
         Iterator<Loan> it = cardRepository.getLoansByCard(cardId);
         if (it == null || !it.hasNext()) {
             throw new NoLoanException();

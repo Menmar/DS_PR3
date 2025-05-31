@@ -7,7 +7,7 @@ import edu.uoc.ds.adt.sequential.SetLinkedListImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.BaseballCards;
 import uoc.ds.pr.BaseballCardsHelper;
-import uoc.ds.pr.LoanStatus;
+import uoc.ds.pr.enums.LoanStatus;
 import uoc.ds.pr.exceptions.EntityNotFoundException;
 import uoc.ds.pr.model.CatalogedCard;
 import uoc.ds.pr.model.Entity;
@@ -15,10 +15,11 @@ import uoc.ds.pr.model.Loan;
 import uoc.ds.pr.util.DSArray;
 
 public class EntityRepository {
-    private BaseballCards baseballCards;
-    private BaseballCardsHelper helper;
+
     protected DSArray<Entity> entities;
     protected Entity entityMostExposing;
+    private final BaseballCards baseballCards;
+    private final BaseballCardsHelper helper;
 
 
     public EntityRepository(BaseballCards baseballCards) {
@@ -61,15 +62,14 @@ public class EntityRepository {
 
     public int numLoans(String entityId) {
         Entity entity = getEntity(entityId);
-        return (entity!=null?entity.numLoans():0);
+        return (entity != null ? entity.numLoans() : 0);
     }
 
     public void updateEntityMostExposing(Entity newEntity) {
         if (entityMostExposing == null) {
             entityMostExposing = newEntity;
-        }
-        else {
-            if (entityMostExposing.numLoans() < newEntity.numLoans()){
+        } else {
+            if (entityMostExposing.numLoans() < newEntity.numLoans()) {
                 entityMostExposing = newEntity;
             }
         }
@@ -81,7 +81,7 @@ public class EntityRepository {
 
     public Iterator<Loan> getLoansByEntity(String entityId) {
         Entity entity = getEntity(entityId);
-        return (entity!=null?entity.getLoans():null);
+        return (entity != null ? entity.getLoans() : null);
     }
 
     public Iterator<Loan> getAllLoansByState(String entityId, LoanStatus state) {
@@ -99,7 +99,7 @@ public class EntityRepository {
 
     public Iterator<Loan> getClosedLoansByEntity(String entityId) {
         Entity entity = getEntity(entityId);
-        return (entity!=null?entity.getClosedLoans():null);
+        return (entity != null ? entity.getClosedLoans() : null);
     }
 
     public void addNewClosedLoan(Loan loan) {
@@ -111,6 +111,6 @@ public class EntityRepository {
 
     public int numClosedLoansByEntity(String entityId) {
         Entity entity = getEntity(entityId);
-        return (entity!=null?entity.numClosedLoans():0);
+        return (entity != null ? entity.numClosedLoans() : 0);
     }
 }

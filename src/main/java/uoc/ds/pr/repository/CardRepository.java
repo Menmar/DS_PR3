@@ -4,7 +4,8 @@ import edu.uoc.ds.adt.sequential.Queue;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.BaseballCards;
 import uoc.ds.pr.BaseballCardsHelper;
-import uoc.ds.pr.CardStatus;
+import uoc.ds.pr.enums.CardRating;
+import uoc.ds.pr.enums.CardStatus;
 import uoc.ds.pr.exceptions.CatalogedCardNotFoundException;
 import uoc.ds.pr.model.CatalogedCard;
 import uoc.ds.pr.model.Collection;
@@ -14,12 +15,13 @@ import uoc.ds.pr.util.CardWareHouse;
 import uoc.ds.pr.util.DSLinkedList;
 
 public class CardRepository {
-    private BaseballCards baseballCards;
-    private BaseballCardsHelper helper;
+
     protected DSLinkedList<CatalogedCard> catalogedCards;
     protected CardWareHouse cardWareHouse;
     protected DSLinkedList<Collection> collections;
     protected CatalogedCard catalogedCardMostExposing;
+    private final BaseballCards baseballCards;
+    private final BaseballCardsHelper helper;
 
     public CardRepository(BaseballCards baseballCards) {
         this.baseballCards = baseballCards;
@@ -31,8 +33,7 @@ public class CardRepository {
 
     public CatalogedCard catalogCard() {
         StoredCard storedCard = cardWareHouse.getCardPendingCataloging();
-        CatalogedCard catalogedCard = catalogedCards.get(new CatalogedCard(storedCard));
-        catalogedCard = new CatalogedCard(storedCard);
+        CatalogedCard catalogedCard = new CatalogedCard(storedCard);
         catalogedCards.insertEnd(catalogedCard);
         return catalogedCard;
     }
@@ -40,10 +41,6 @@ public class CardRepository {
 
     public boolean isEmpty() {
         return cardWareHouse.isEmpty();
-    }
-
-    public void storecard(String cardId, String player, int publicationYear, String collection, CardStatus status) {
-        cardWareHouse.storeCard(cardId, player, publicationYear, collection, status);
     }
 
     public int numStoredCards() {
@@ -63,8 +60,8 @@ public class CardRepository {
     }
 
     public CatalogedCard getCatalogedCardOrThrow(String cardId) throws CatalogedCardNotFoundException {
-        CatalogedCard catalogedCard =  catalogedCards.get(new CatalogedCard(cardId));
-        if (catalogedCard == null)  {
+        CatalogedCard catalogedCard = catalogedCards.get(new CatalogedCard(cardId));
+        if (catalogedCard == null) {
             throw new CatalogedCardNotFoundException();
         }
         return catalogedCard;
@@ -73,9 +70,8 @@ public class CardRepository {
     public void updateCardMostExposing(CatalogedCard newCatalogedCard) {
         if (catalogedCardMostExposing == null) {
             catalogedCardMostExposing = newCatalogedCard;
-        }
-        else {
-            if (catalogedCardMostExposing.numLoans() < newCatalogedCard.numLoans()){
+        } else {
+            if (catalogedCardMostExposing.numLoans() < newCatalogedCard.numLoans()) {
                 catalogedCardMostExposing = newCatalogedCard;
             }
         }
@@ -87,7 +83,7 @@ public class CardRepository {
 
     public int numLoansByCard(String cardId) {
         CatalogedCard catalogedCard = getCatalogedCard(cardId);
-        return (catalogedCard!=null?catalogedCard.numLoans():0);
+        return (catalogedCard != null ? catalogedCard.numLoans() : 0);
     }
 
     public void addNewLoan(CatalogedCard catalogedCard, Loan loan) {
@@ -96,7 +92,7 @@ public class CardRepository {
 
     public Iterator<Loan> getLoansByCard(String cardId) {
         CatalogedCard catalogedCard = getCatalogedCard(cardId);
-        return (catalogedCard!=null?catalogedCard.getAllLoans():null);
+        return (catalogedCard != null ? catalogedCard.getAllLoans() : null);
     }
 
     public CardWareHouse.Position getPosition(String cardId) {
@@ -105,6 +101,16 @@ public class CardRepository {
 
     public int getNumCardsInLastCase() {
         Queue<StoredCard> q = cardWareHouse.peek();
-        return (q!=null?q.size():0);
+        return (q != null ? q.size() : 0);
+    }
+
+    public void storecard(String cardId, String player, int publicationYear, String collection, CardStatus status,
+        CardRating rating) {
+        cardWareHouse.storeCard(cardId, player, publicationYear, collection, status, rating);
+
+    }
+
+    public void storecard(String cardId, String player, int publicationYear, String collection, CardStatus status) {
+
     }
 }

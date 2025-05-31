@@ -6,54 +6,56 @@ import edu.uoc.ds.traversal.Iterator;
 import edu.uoc.ds.traversal.IteratorArrayImpl;
 
 public class DSArray<E> {
-    KeyValue<String, E>[] theArray;
-    int num;
 
-    public DSArray(int len) {
-        theArray = new KeyValue[len];
-    }
+  KeyValue<String, E>[] theArray;
+  int num;
 
-    public E get(String id)  {
+  public DSArray(int len) {
+    theArray = new KeyValue[len];
+  }
 
-        for (KeyValue<String, E> kv : theArray) {
-            if (kv == null) {
-                return null;
-            } else if (kv.getKey().equals(id)){
-                return kv.getValue();
-            }
-        }
+  public E get(String id) {
+
+    for (KeyValue<String, E> kv : theArray) {
+      if (kv == null) {
         return null;
+      } else if (kv.getKey().equals(id)) {
+        return kv.getValue();
+      }
     }
+    return null;
+  }
 
-    public void put(String id, E elem) {
-        theArray[num++] = new KeyValue<>(id, elem);
+  public void put(String id, E elem) {
+    theArray[num++] = new KeyValue<>(id, elem);
+  }
+
+  public void update(String id, E elem) {
+    for (KeyValue<String, E> kv : theArray) {
+      if (kv != null && kv.getKey().equals(id)) {
+        kv.setValue(elem);
+      }
     }
+  }
 
-    public void update(String id, E elem) {
-        for (KeyValue<String, E> kv : theArray) {
-            if (kv!=null && kv.getKey().equals(id)){
-                kv.setValue(elem);
-            }
-        }
-    }
+  public Iterator<E> values() {
+    final Iterator<KeyValue<String, E>> it = new IteratorArrayImpl<>(theArray, num, 0);
 
-    public Iterator<E> values() {
-        final Iterator<KeyValue<String, E>> it = new IteratorArrayImpl<>(theArray, num,0);
+    return new Iterator<E>() {
 
-        return new Iterator<E>() {
+      @Override
+      public boolean hasNext() {
+        return it.hasNext();
+      }
 
-            @Override
-            public boolean hasNext() {
-                return it.hasNext();
-            }
+      @Override
+      public E next() throws InvalidPositionException {
+        return it.next().getValue();
+      }
+    };
+  }
 
-            @Override
-            public E next() throws InvalidPositionException {
-                return it.next().getValue();
-            }
-        };
-    }
-    public int size() {
-        return num;
-    }
+  public int size() {
+    return num;
+  }
 }

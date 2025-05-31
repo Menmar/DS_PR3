@@ -10,9 +10,10 @@ import uoc.ds.pr.model.Loan;
 import uoc.ds.pr.util.DSLinkedList;
 
 public class LoanRepository {
-    private BaseballCards baseballCards;
-    private BaseballCardsHelper helper;
+
     protected DSLinkedList<Loan> loanList;
+    private final BaseballCards baseballCards;
+    private final BaseballCardsHelper helper;
 
     public LoanRepository(BaseballCards baseballCards) {
         this.baseballCards = baseballCards;
@@ -30,7 +31,8 @@ public class LoanRepository {
         return loanList.size();
     }
 
-    public Loan addNewLoan(Entity entity, String loanId, CatalogedCard catalogedCard, LocalDate date, LocalDate expirationDate) {
+    public Loan addNewLoan(Entity entity, String loanId, CatalogedCard catalogedCard, LocalDate date,
+        LocalDate expirationDate) {
         Loan loan = new Loan(loanId, entity, catalogedCard, date, expirationDate);
         addLoan(loan);
         return loan;

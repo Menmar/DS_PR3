@@ -6,10 +6,11 @@ import edu.uoc.ds.traversal.Iterator;
 import java.util.Comparator;
 
 public class Player {
-    public static final Comparator<Player> CMP_ID = (p1, p2)->p1.getId().compareTo(p2.getId());
+
+    public static final Comparator<Player> CMP_ID = (p1, p2) -> p1.getId().compareTo(p2.getId());
     private String id;
     private String name;
-    private List<CatalogedCard> catalogedCardList;
+    private final List<CatalogedCard> catalogedCardList;
 
     public Player() {
         catalogedCardList = new LinkedList<>();

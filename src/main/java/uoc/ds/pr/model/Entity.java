@@ -4,12 +4,13 @@ import edu.uoc.ds.adt.sequential.LinkedList;
 import edu.uoc.ds.traversal.Iterator;
 
 public class Entity {
+
     private String entityId;
     private String name;
     private String address;
     private int numCurrentLoans;
-    private LinkedList<Loan> loanList;
-    private LinkedList<Loan> closedLoans;
+    private final LinkedList<Loan> loanList;
+    private final LinkedList<Loan> closedLoans;
 
     public Entity(String entityId, String name, String address) {
         this.entityId = entityId;

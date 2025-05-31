@@ -2,12 +2,12 @@ package uoc.ds.pr.model;
 
 import java.time.LocalDate;
 import java.util.Comparator;
-import uoc.ds.pr.LoanStatus;
+import uoc.ds.pr.enums.LoanStatus;
 
 public class Loan {
 
-    public static final Comparator<Loan> CMP_ID = (l1, l2)->l1.getLoanId().compareTo(l2.getLoanId());
-    private String loanId;
+    public static final Comparator<Loan> CMP_ID = (l1, l2) -> l1.getLoanId().compareTo(l2.getLoanId());
+    private final String loanId;
     private Entity entity;
     private CatalogedCard catalogedCard;
     private LocalDate date;
@@ -44,6 +44,10 @@ public class Loan {
         return this.status;
     }
 
+    public void setStatus(LoanStatus loanStatus) {
+        this.status = loanStatus;
+    }
+
     public Worker getWorker() {
         return worker;
     }
@@ -53,10 +57,6 @@ public class Loan {
     }
 
     public boolean isDelayed(LocalDate date) {
-        return date.compareTo(expirationDate)>0;
-    }
-
-    public void setStatus(LoanStatus loanStatus) {
-        this.status = loanStatus;
+        return date.isAfter(expirationDate);
     }
 }

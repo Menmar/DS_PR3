@@ -1,22 +1,38 @@
 package uoc.ds.pr;
 
+import static uoc.ds.pr.BaseballCards.MAX_LOANS_BY_ENTITY;
+import static uoc.ds.pr.util.CardsDataHelper.addCardsData;
+
 import edu.uoc.ds.traversal.Iterator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import uoc.ds.pr.enums.CardRating;
 import uoc.ds.pr.enums.CardStatus;
 import uoc.ds.pr.enums.LoanStatus;
 import uoc.ds.pr.enums.WorkerRole;
-import uoc.ds.pr.exceptions.*;
+import uoc.ds.pr.exceptions.CatalogedCardAlreadyLoanedException;
+import uoc.ds.pr.exceptions.CatalogedCardNotFoundException;
+import uoc.ds.pr.exceptions.DSException;
+import uoc.ds.pr.exceptions.EntityNotFoundException;
+import uoc.ds.pr.exceptions.InvalidCatalogTimeException;
+import uoc.ds.pr.exceptions.InvalidLotPreparationTimeException;
+import uoc.ds.pr.exceptions.LoanNotFoundException;
+import uoc.ds.pr.exceptions.MaximumNumberOfLoansException;
+import uoc.ds.pr.exceptions.NoCardException;
+import uoc.ds.pr.exceptions.NoEntityException;
+import uoc.ds.pr.exceptions.NoLoanException;
+import uoc.ds.pr.exceptions.StoredCardNotFoundException;
+import uoc.ds.pr.exceptions.WorkerNotAllowedException;
+import uoc.ds.pr.exceptions.WorkerNotFoundException;
+import uoc.ds.pr.model.CatalogedCard;
+import uoc.ds.pr.model.Entity;
+import uoc.ds.pr.model.Loan;
+import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.util.CardsData;
 import uoc.ds.pr.util.CardsDataHelper;
 import uoc.ds.pr.util.DateUtils;
-
-import static uoc.ds.pr.BaseballCards.MAX_LOANS_BY_ENTITY;
-import static uoc.ds.pr.util.CardsDataHelper.addCardsData;
 
 public class BaseballCardsPR2Test {
 
