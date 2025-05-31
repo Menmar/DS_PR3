@@ -2,6 +2,7 @@ package uoc.ds.pr.util;
 
 import org.junit.Assert;
 import org.junit.Test;
+import uoc.ds.pr.LevelHelper;
 import uoc.ds.pr.enums.CollectorLevel;
 
 public class LevelHelperTest {

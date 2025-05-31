@@ -40,12 +40,8 @@ public class AuctionRepository {
     return auction;
   }
 
-  public Auction getAuction(String auctionId) throws AuctionNotFoundException {
-    Auction auction= auctions.get(auctionId);
-    if (auction == null) {
-      throw new AuctionNotFoundException();
-    }
-    return auction;
+  public Auction getAuction(String auctionId) {
+    return auctions.get(auctionId);
   }
 
   public Auction getAuctionByCard(String cardId) {

@@ -39,7 +39,7 @@ public interface BaseballCardsPR3 extends BaseballCards{
     void addAuction(String auctionId, String cardId, String workerId, AuctionType auctionType, double price)
             throws CatalogedCardNotFoundException, WorkerNotFoundException,
             WorkerNotAllowedException, CatalogedCardAlreadyLentException,
-        AuctionAlreadyExistsException, AuctionAlreadyExists4CardException, CatalogedCardNotFoundException, WorkerNotFoundException, WorkerNotAllowedException, CatalogedCardAlreadyLentException;
+        AuctionAlreadyExistsException, AuctionAlreadyExists4CardException, CatalogedCardNotFoundException, WorkerNotFoundException, WorkerNotAllowedException, CatalogedCardAlreadyLentException, AuctionNotFoundException;
     void addOpenBid(String auctionId, String collectorId, double price) throws CardCollectorNotFoundException, AuctionNotFoundException,
         AuctionClosedException, BidPriceTooLowException;
     void addClosedBid(String auctionId, String collectorId) throws CardCollectorNotFoundException, AuctionClosedException, AuctionNotFoundException;

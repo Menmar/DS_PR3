@@ -8,13 +8,27 @@ import uoc.ds.pr.enums.AuctionType;
 import uoc.ds.pr.enums.CardRating;
 import uoc.ds.pr.enums.CollectorLevel;
 import uoc.ds.pr.enums.WorkerRole;
-import uoc.ds.pr.exceptions.*;
-import uoc.ds.pr.model.*;
+import uoc.ds.pr.exceptions.AuctionAlreadyExists4CardException;
+import uoc.ds.pr.exceptions.AuctionAlreadyExistsException;
+import uoc.ds.pr.exceptions.AuctionNotFoundException;
+import uoc.ds.pr.exceptions.AuctionStillOpenException;
+import uoc.ds.pr.exceptions.CardAlreadyInOwnCollectionException;
+import uoc.ds.pr.exceptions.CardCollectorNotFoundException;
+import uoc.ds.pr.exceptions.CatalogedCardAlreadyAuctionedException;
+import uoc.ds.pr.exceptions.CatalogedCardAlreadyInWishlistException;
+import uoc.ds.pr.exceptions.CatalogedCardNotFoundException;
+import uoc.ds.pr.exceptions.CollectionNotFoundException;
+import uoc.ds.pr.exceptions.DSException;
+import uoc.ds.pr.exceptions.NoWorkerException;
+import uoc.ds.pr.exceptions.WorkerNotAllowedException;
+import uoc.ds.pr.exceptions.WorkerNotFoundException;
+import uoc.ds.pr.model.Auction;
+import uoc.ds.pr.model.Bid;
+import uoc.ds.pr.model.CardCollector;
+import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.util.CardCollectorData;
 import uoc.ds.pr.util.CardCollectorHelper;
 import uoc.ds.pr.util.DateUtils;
-
-import javax.smartcardio.Card;
 
 public class BaseballCardsPR3Test extends BaseballCardsPR2Test{
     protected BaseballCardsHelperPR3 helperPR3;
@@ -28,7 +42,7 @@ public class BaseballCardsPR3Test extends BaseballCardsPR2Test{
 
 
     @Test
-    public void addCollectorTest() {
+    public void addCollectorTest() throws CardCollectorNotFoundException {
         CardCollectorHelper.addCardsCollectorData(baseballCards, CardCollectorData.cardCollectorData);
         Assert.assertEquals(10, helperPR3.numCardCollectors());
 

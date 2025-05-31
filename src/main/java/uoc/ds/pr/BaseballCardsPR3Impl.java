@@ -131,7 +131,7 @@ public class BaseballCardsPR3Impl extends BaseballCardsPR2Impl implements Baseba
 
   @Override
   public void addAuction(String auctionId, String cardId, String workerId, AuctionType auctionType, double price)
-      throws CatalogedCardNotFoundException, WorkerNotFoundException, WorkerNotAllowedException, CatalogedCardAlreadyLentException, AuctionAlreadyExistsException, AuctionAlreadyExists4CardException {
+      throws CatalogedCardNotFoundException, WorkerNotFoundException, WorkerNotAllowedException, CatalogedCardAlreadyLentException, AuctionAlreadyExistsException, AuctionAlreadyExists4CardException, AuctionNotFoundException {
 
     if (auctionRepository.getAuction(auctionId) != null) {
       throw new AuctionAlreadyExistsException();

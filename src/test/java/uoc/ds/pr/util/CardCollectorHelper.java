@@ -1,6 +1,8 @@
 package uoc.ds.pr.util;
 
 import uoc.ds.pr.BaseballCardsPR3;
+import uoc.ds.pr.model.CardCollector;
+import uoc.ds.pr.model.StoredCard;
 
 public class CardCollectorHelper {
     public static void addCardsCollectorData(BaseballCardsPR3 baseballCards, String[][] cardsCollectorData) {

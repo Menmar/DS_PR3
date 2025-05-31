@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import uoc.ds.pr.enums.CardRating;
 import uoc.ds.pr.enums.CardStatus;
+import uoc.ds.pr.model.StoredCard;
 
 
 public class CardsWareHouseTest {

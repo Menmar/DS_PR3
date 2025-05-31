@@ -1,8 +1,8 @@
-## PR2
+## PR3
 
 ## Author
-- name: #name#
-- e-mail: #email#
+- name: Félix Menéndez Marqués
+- e-mail: fmenmar@uoc.edu
 
 ## 
 ## Overview
